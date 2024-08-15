@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3 uid="uid://tltli7glt6eb"]
+
+[ext_resource type="Script" path="res://player_ball.gd" id="1_j3epe"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_wl2oy"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_y2chi"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g284w"]
+radius = 0.1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y5yxk"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_efn1b"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("ScoreText:text")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="PlayerBall" type="CharacterBody3D"]
+collision_layer = 8
+platform_on_leave = 2
+script = ExtResource("1_j3epe")
+
+[node name="ScoreText" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+pixel_size = 0.03
+billboard = 2
+text = "test"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_wl2oy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_y2chi")
+
+[node name="Camera_Controller" type="Node3D" parent="."]
+top_level = true
+
+[node name="Camera_Target" type="Node3D" parent="Camera_Controller"]
+transform = Transform3D(1, 0, 0, 0, 0.885839, 0.463992, 0, -0.463992, 0.885839, 0, 8.92133, 16.0633)
+
+[node name="Camera3D" type="Camera3D" parent="Camera_Controller/Camera_Target"]
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="ShootingBar" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -5.64263e-08, -1.29088)
+collision_layer = 0
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/ShootingBar"]
+transform = Transform3D(1, 0, 0, 0, 0.727638, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_g284w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/ShootingBar"]
+shape = SubResource("CapsuleShape3D_y5yxk")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_efn1b")

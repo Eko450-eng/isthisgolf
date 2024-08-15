@@ -1,0 +1,126 @@
+[gd_scene load_steps=11 format=3 uid="uid://da444jk1b0sm5"]
+
+[ext_resource type="Texture2D" uid="uid://bx2lksemw0j5w" path="res://assets/textures/aerial_grass_rock_diff_4k.jpg" id="1_e0hua"]
+[ext_resource type="Script" path="res://tutorial.gd" id="1_pl7nf"]
+[ext_resource type="Texture2D" uid="uid://bfywcjmg5fnun" path="res://assets/textures/aerial_grass_rock_rough_4k.jpg" id="2_0lknk"]
+[ext_resource type="PackedScene" uid="uid://tltli7glt6eb" path="res://player_ball.tscn" id="2_t5k7f"]
+[ext_resource type="PackedScene" uid="uid://77c3not3pyu1" path="res://strength_bar.tscn" id="3_hewfw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p3vff"]
+albedo_texture = ExtResource("1_e0hua")
+roughness_texture = ExtResource("2_0lknk")
+normal_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ehodj"]
+material = SubResource("StandardMaterial3D_p3vff")
+size = Vector3(300, 0.5, 300)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_muden"]
+size = Vector3(300, 0.5, 300)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ny2qk"]
+size = Vector3(300, 5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mpkrk"]
+size = Vector3(300, 5, 1)
+
+[node name="Tutorial" type="Node3D"]
+script = ExtResource("1_pl7nf")
+player_scene = ExtResource("2_t5k7f")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.258707, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_ehodj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_muden")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.451703, 0.892168, 0, -0.892168, -0.451703, 0, 100.817, -5.29082)
+
+[node name="StrengthBar" parent="." instance=ExtResource("3_hewfw")]
+
+[node name="wall1" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.8995, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wall1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -23, -141)
+shape = SubResource("BoxShape3D_ny2qk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="wall1/CollisionShape3D"]
+mesh = SubResource("BoxMesh_mpkrk")
+skeleton = NodePath("../..")
+
+[node name="wall2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.8995, 282)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -23, -141)
+shape = SubResource("BoxShape3D_ny2qk")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="wall2/CollisionShape3D"]
+mesh = SubResource("BoxMesh_mpkrk")
+skeleton = NodePath("../../../wall1")
+
+[node name="wall3" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 24.8995, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wall3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -23, -141)
+shape = SubResource("BoxShape3D_ny2qk")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="wall3/CollisionShape3D"]
+mesh = SubResource("BoxMesh_mpkrk")
+skeleton = NodePath("../../../wall1")
+
+[node name="wall4" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 284, 24.8995, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wall4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -23, -141)
+shape = SubResource("BoxShape3D_ny2qk")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="wall4/CollisionShape3D"]
+mesh = SubResource("BoxMesh_mpkrk")
+skeleton = NodePath("../../../wall1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Host" type="Button" parent="CanvasLayer"]
+offset_left = 320.0
+offset_top = 176.0
+offset_right = 364.0
+offset_bottom = 207.0
+text = "Host"
+
+[node name="Join" type="Button" parent="CanvasLayer"]
+offset_left = 320.0
+offset_top = 72.0
+offset_right = 358.0
+offset_bottom = 103.0
+text = "Join"
+
+[node name="IP_Adress" type="TextEdit" parent="CanvasLayer"]
+custom_minimum_size = Vector2(200, 50)
+offset_left = 88.0
+offset_top = 64.0
+offset_right = 288.0
+offset_bottom = 114.0
+placeholder_text = "IP Adress"
+
+[node name="Port" type="TextEdit" parent="CanvasLayer"]
+custom_minimum_size = Vector2(200, 50)
+offset_left = 88.0
+offset_top = 168.0
+offset_right = 288.0
+offset_bottom = 218.0
+placeholder_text = "Port"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player_ball.tscn")
+spawn_path = NodePath("..")
+
+[connection signal="pressed" from="CanvasLayer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/Join" to="." method="_on_join_pressed"]

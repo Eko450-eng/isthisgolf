@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://crg8reujq35pq"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kkudh"]
+bounce = 0.51
+
+[sub_resource type="SphereMesh" id="SphereMesh_dcitv"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_r78s0"]
+
+[node name="ball" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_kkudh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_dcitv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_r78s0")
